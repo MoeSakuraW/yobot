@@ -1,10 +1,11 @@
-var vm = new Vue({
-    el: '#app',
+new Vue({
+    el: '#q-app',
     data: {
-        bosstag: ['挂树', '预约1', '预约2', '预约3', '预约4', '预约5'],
+        bosstag: ['挂树', '一王', '二王', '三王', '四王', '五王'],
         subscribers: [
             [], [], [], [], [], [],
         ],
+        tab: '挂树',
         members: [],
         group_name: null,
         activeIndex: '2',
@@ -20,12 +21,12 @@ var vm = new Vue({
                     thisvue.subscribers[sub.boss].push(sub);
                 }
                 thisvue.group_name = res.data.group_name;
-                document.title = res.data.group_name + ' - 公会战设置';
+                document.title = res.data.group_name + ' - 预约管理';
             } else {
-                thisvue.$alert(res.data.message, '获取数据失败');
+                thisvue.$q.notify(res.data.message, '获取数据失败');
             }
         }).catch(function (error) {
-            thisvue.$alert(error, '获取数据失败');
+            thisvue.$q.notify(error, '获取数据失败');
         });
         axios.post('../api/', {
             action: 'get_member_list',
@@ -34,10 +35,10 @@ var vm = new Vue({
             if (res.data.code == 0) {
                 thisvue.members = res.data.members;
             } else {
-                thisvue.$alert(res.data.message, '获取成员失败');
+                thisvue.$q.notify(res.data.message, '获取成员失败');
             }
         }).catch(function (error) {
-            thisvue.$alert(error, '获取成员失败');
+            thisvue.$q.notify(error, '获取成员失败');
         });
     },
     methods: {
